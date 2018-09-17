@@ -1,32 +1,68 @@
 import React, { Component } from 'react';
 import './App.css';
+import styled from 'styled-components';
 
 class App extends Component {
 	state = {
-		randoJoke: ''
+		randomJoke: [],
+		input: ''
 	};
 
-	componentDidMount = () => {
-		const URL = 'http://api.icndb.com/jokes/random';
+	handleInput = event => {
+		this.setState({ input: event.target.value });
+	};
+
+	handleJokes = () => {
+		const URL = `http://api.icndb.com/jokes/random/${this.state.input}`;
 		fetch(URL)
 			.then(response => response.json())
-			.then(response => console.log(response))
-			.then(response => this.setState({ randoJoke: response }));
+
+			.then(response =>
+				this.setState({
+					randomJoke: this.state.randomJoke.concat(response.value)
+				})
+			);
 	};
 
 	render() {
 		return (
-			<div className="App">
+			<AppContainer className="App">
 				<div>
-					<header>Chuck Norris Jokes</header>
+					<Header>Chuck Norris Jokes</Header>
 				</div>
 				<div>
-					<input />
-					<button>Clickeme</button>
+					<input onChange={this.handleInput} />
+					<Button onClick={this.handleJokes}>Click me</Button>
 				</div>
-			</div>
+				<Jokes>
+					{this.state.randomJoke.map(val => (
+						<div>{val.joke}</div>
+					))}
+				</Jokes>
+			</AppContainer>
 		);
 	}
 }
+
+const AppContainer = styled.div`
+	background-color: grey;
+	margin: 0 auto;
+	text-align: center;
+`;
+
+const Button = styled.button`
+	background-color: green;
+	color: pink;
+`;
+
+const Header = styled.div`
+	font-size: 36px;
+`;
+
+const Jokes = styled.div`
+	display: flex;
+	justify-content: space-between;
+	color: pink;
+`;
 
 export default App;

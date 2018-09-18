@@ -16,7 +16,6 @@ class App extends Component {
 		const URL = `http://api.icndb.com/jokes/random/${this.state.input}`;
 		fetch(URL)
 			.then(response => response.json())
-
 			.then(response =>
 				this.setState({
 					randomJoke: this.state.randomJoke.concat(response.value)
@@ -36,13 +35,18 @@ class App extends Component {
 				</div>
 				<Jokes>
 					{this.state.randomJoke.map(val => (
-						<div>{val.joke}</div>
+						<div>{val.joke.replace(/&quot;/g, '"')}</div>
 					))}
 				</Jokes>
 			</AppContainer>
 		);
 	}
 }
+
+
+//URL paths i.e. /jokes and /settings in React Router
+
+//Make a Settings Page -- field to change the name of Chuck Norris + Parental Controls (radio button)
 
 const AppContainer = styled.div`
 	background-color: grey;
@@ -61,8 +65,12 @@ const Header = styled.div`
 
 const Jokes = styled.div`
 	display: flex;
-	justify-content: space-between;
+	justify-content: center;
+	align-content: center;
 	color: pink;
+	position: relative;
+	overflow: visible;
+	width: 100px;
 `;
 
 export default App;

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import styled from 'styled-components';
+import { Router, Link } from '@reach/router';
+import Jokes from './Jokes';
 
 class App extends Component {
 	state = {
@@ -31,24 +33,32 @@ class App extends Component {
 				</div>
 				<div>
 					<input onChange={this.handleInput} />
-					<Button onClick={this.handleJokes}>Click me</Button>
+					<Link to="/jokes">
+						<Button onClick={this.handleJokes}>Click me</Button>
+					</Link>
 				</div>
-				<Jokes>
-					{this.state.randomJoke.map(val => (
+				{this.state.randomJoke ? (
+					this.state.randomJoke.map(val => (
 						<div>{val.joke.replace(/&quot;/g, '"')}</div>
-					))}
-				</Jokes>
+					))
+				) : (
+					<div />
+				)}
+				<Link to="/">
+					<h1>Go Home</h1>
+				</Link>
 			</AppContainer>
 		);
 	}
 }
-
 
 //URL paths i.e. /jokes and /settings in React Router
 
 //Make a Settings Page -- field to change the name of Chuck Norris + Parental Controls (radio button)
 
 const AppContainer = styled.div`
+	display: flex;
+	justify-content: center;
 	background-color: grey;
 	margin: 0 auto;
 	text-align: center;
@@ -61,16 +71,6 @@ const Button = styled.button`
 
 const Header = styled.div`
 	font-size: 36px;
-`;
-
-const Jokes = styled.div`
-	display: flex;
-	justify-content: center;
-	align-content: center;
-	color: pink;
-	position: relative;
-	overflow: visible;
-	width: 100px;
 `;
 
 export default App;

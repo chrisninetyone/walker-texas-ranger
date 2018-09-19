@@ -1,54 +1,51 @@
-import React, { Component } from 'react';
-import './App.css';
-import styled from 'styled-components';
-import { Router, Link } from '@reach/router';
-import Jokes from './Jokes';
+import React, { Component } from 'react'
+import './App.css'
+import styled from 'styled-components'
+import { Router, Link } from '@reach/router'
+import Jokes from './Jokes'
+import { navigate } from '@reach/router/lib/history'
 
 class App extends Component {
 	state = {
 		randomJoke: [],
 		input: ''
-	};
+	}
 
 	handleInput = event => {
-		this.setState({ input: event.target.value });
-	};
+		this.setState({ input: event.target.value })
+	}
 
 	handleJokes = () => {
-		const URL = `http://api.icndb.com/jokes/random/${this.state.input}`;
+		const URL = `http://api.icndb.com/jokes/random/${this.state.input}`
 		fetch(URL)
 			.then(response => response.json())
 			.then(response =>
-				this.setState({
-					randomJoke: this.state.randomJoke.concat(response.value)
-				})
-			);
-	};
+				this.setState(
+					{
+						randomJoke: this.state.randomJoke.concat(response.value)
+					},
+					() => {
+						navigate('/jokes')
+					}
+				)
+			)
+	}
 
 	render() {
 		return (
 			<AppContainer className="App">
 				<div>
-					<Header>Chuck Norris Jokes</Header>
+					<Link to="/">
+						<Header>Chuck Norris Jokes</Header>
+					</Link>
 				</div>
 				<div>
 					<input onChange={this.handleInput} />
-					<Link to="/jokes">
-						<Button onClick={this.handleJokes}>Click me</Button>
-					</Link>
+					<Button onClick={this.handleJokes}>Click me</Button>
 				</div>
-				{this.state.randomJoke ? (
-					this.state.randomJoke.map(val => (
-						<div>{val.joke.replace(/&quot;/g, '"')}</div>
-					))
-				) : (
-					<div />
-				)}
-				<Link to="/">
-					<h1>Go Home</h1>
-				</Link>
+				<Jokes joke={this.state.randomJoke} />
 			</AppContainer>
-		);
+		)
 	}
 }
 
@@ -62,15 +59,16 @@ const AppContainer = styled.div`
 	background-color: grey;
 	margin: 0 auto;
 	text-align: center;
-`;
+	height: 100vh;
+`
 
 const Button = styled.button`
 	background-color: green;
 	color: pink;
-`;
+`
 
 const Header = styled.div`
 	font-size: 36px;
-`;
+`
 
-export default App;
+export default App

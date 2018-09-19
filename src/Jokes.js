@@ -1,14 +1,17 @@
-import React from 'react';
+import React from 'react'
+import { navigate } from '@reach/router'
 
 export default class Jokes extends React.Component {
-
-
-    componentDidMount(){
-
-    }
+	componentDidMount() {
+		this.props.joke === undefined && navigate('/')
+	}
 	render() {
-		return (
-			<div></div>
-		);
+		return this.props.joke ? (
+			this.props.joke.map(val => (
+				<div>{val.joke.replace(/&quot;/g, '"')}</div>
+			))
+		) : (
+			<div />
+		)
 	}
 }

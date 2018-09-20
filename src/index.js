@@ -5,12 +5,14 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { Router, Link } from '@reach/router';
 import Jokes from './Jokes';
+import Settings from './Settings';
 
 ReactDOM.render(
 	<div>
 		<Router>
 			<App path="/" />
 			<Jokes path="/jokes" />
+			<Settings path="/settings" />
 		</Router>
 	</div>,
 	document.getElementById('root')

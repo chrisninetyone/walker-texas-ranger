@@ -6,6 +6,7 @@ import registerServiceWorker from './registerServiceWorker';
 import { Router, Link } from '@reach/router';
 import Jokes from './Jokes';
 import Settings from './Settings';
+import "./index.css"
 
 ReactDOM.render(
 	<div>

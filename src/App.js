@@ -25,7 +25,8 @@ class App extends Component {
 			.then(response =>
 				this.setState(
 					{
-						randomJoke: this.state.randomJoke.concat(response.value)
+                        randomJoke: this.state.randomJoke.concat(response.value),
+                        settings: false
 					},
 					() => {
 						navigate('/jokes')
@@ -35,7 +36,9 @@ class App extends Component {
 	}
 
 	settingsState = () => {
-		this.setState({ settings: true }, () => navigate('/settings'))
+		this.setState({ settings: true, randomJoke: [] }, () =>
+			navigate('/settings')
+		)
 	}
 
 	handleNameInput = event => {
@@ -75,43 +78,43 @@ class App extends Component {
 }
 
 const AppContainer = styled.div`
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 	/* background-color: grey; */
 	margin: 0 auto;
 	text-align: center;
-    height: 100vh;
-    input {
-        font-size: 24px;
-    }
-    a {
-        text-decoration: none;
-    }
+	height: 100vh;
+	input {
+		font-size: 24px;
+	}
+	a {
+		text-decoration: none;
+	}
 `
 
 const JokesContainer = styled.div`
 	display: flex;
-    flex-flow: row wrap;
-    justify-content: space-around;
+	flex-flow: row wrap;
+	justify-content: space-around;
 `
 
-const Button = styled.button`
-    font-size: 24px;
-    border-radius: 5px;
-    margin: 5px;
-    border: 1px solid lightblue;
-    &:hover {
-        background-color: lightblue;
-        color: white;
-        border: 1px solid lightblue;
-        cursor: pointer;
-    }
+export const Button = styled.button`
+	font-size: 24px;
+	border-radius: 5px;
+	margin: 5px;
+	border: 1px solid lightblue;
+	&:hover {
+		background-color: lightblue;
+		color: white;
+		border: 1px solid lightblue;
+		cursor: pointer;
+	}
 `
 
 const Header = styled.div`
-    font-size: 36px;
-    text-decoration: none;
-    font-family: Roboto;
+	font-size: 36px;
+	text-decoration: none;
+	font-family: Roboto;
 `
 
 export default App

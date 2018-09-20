@@ -8,6 +8,8 @@ export default class Jokes extends React.Component {
 		this.props.joke === undefined && navigate('/');
 	}
 	render() {
+        const url = window.location.pathname
+
 		return this.props.joke ? (
 			this.props.joke.map(val => <JokeCard>{val.joke.replace(/&quot;/g, '"')}</JokeCard>)
 		) : (
